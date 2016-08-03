@@ -1,0 +1,29 @@
+{
+    "name": "freshflesh/wp-render-template-part",
+    "description": "An alternative to the native WP function `get_template_part` that can pass arguments to the local scope",
+    "homepage": "https://github.com/FreshFlesh/WP-RenderTemplatePart",
+    "keywords":
+        [
+            "wordpress",
+            "template",
+            "part",
+            "render",
+            "get_template_part"
+        ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Charbit",
+            "email": "thomas.charbit@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "files": ["src/wp-render-template-part.php"]
+    }
+
+}
