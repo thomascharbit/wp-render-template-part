@@ -20,7 +20,7 @@ To pass arguments to a template partial, use the `render_template_part()` functi
 
 #### Simple example
 
-**Parent template**
+Parent template:
 
     <?php
         $args =  array(
@@ -31,13 +31,12 @@ To pass arguments to a template partial, use the `render_template_part()` functi
         render_template_part( 'block', 'widget', $args );
 
 
-**Child template**
+Child template:
 
-    <?php
-        <div class="widget">
-            <h2><?php echo $title; // will output 'Hello there.' ?></h2>
-            <p><?php echo $content;  // will output 'Lorem ipsum sid amet' ?></p>
-        </div>
+    <div class="widget">
+        <h2><?php echo $title; // will output 'Hello there.' ?></h2>
+        <p><?php echo $content;  // will output 'Lorem ipsum sid amet' ?></p>
+    </div>
 
 
 #### Returning value example
