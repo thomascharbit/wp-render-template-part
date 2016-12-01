@@ -15,9 +15,10 @@
 function render_template_part( $slug, $name = null, $args = array(), $echo = true) {
     global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
-    // If template name is omitted, invert parameters
+    // If template name is omitted, shift parameters
     if ( is_array($name) ) {
         $args = $name;
+        $echo = $args;
         $name = null;
     }
 
