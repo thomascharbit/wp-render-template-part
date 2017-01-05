@@ -17,8 +17,8 @@ function render_template_part( $slug, $name = null, $args = array(), $echo = tru
 
     // If template name is omitted, shift parameters
     if ( is_array($name) ) {
-        $args = $name;
         $echo = $args;
+        $args = $name;
         $name = null;
     }
 
