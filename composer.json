@@ -1,7 +1,7 @@
 {
     "name": "freshflesh/wp-render-template-part",
     "description": "An alternative to the native WP function `get_template_part` that can pass arguments to the local scope",
-    "homepage": "https://github.com/FreshFlesh/wp-render-template-part",
+    "homepage": "https://github.com/thomascharbit/wp-render-template-part",
     "keywords":
         [
             "wordpress",
