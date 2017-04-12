@@ -2,7 +2,7 @@
 
 /**
  * An alternative to the native WP function `get_template_part` that
- * can pass arguments to the local scpoe
+ * can pass arguments to the local scope
  *
  * @param string $slug The slug name for the generic template.
  * @param string $name The name of the specialised template.
@@ -11,6 +11,9 @@
  * 
  * @return string The rendered template if $echo is false.
  */
+
+use Symfony\Component\DomCrawler\Crawler;
+
 
 function render_template_part( $slug, $name = null, $args = array(), $echo = true) {
     global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
@@ -29,13 +32,25 @@ function render_template_part( $slug, $name = null, $args = array(), $echo = tru
     $args = apply_filters( "render_template_part_{$slug}_args", $args, $slug, $name, $echo );
 
     $templates = array();
+
     $name = (string) $name;
-    if ( '' !== $name )
+    if ( '' !== $name ) {
+        if ( strpos($name, ' ') !== false ) {
+            $cssSelector = substr($name, strrpos($name, ' ') + 1);
+            $name = substr($name, 0, strrpos($name, ' '));
+        }
         $templates[] = "{$slug}-{$name}.php";
- 
+    }
+
+    if ( strpos($slug, ' ') !== false ) {
+        $cssSelector = substr($slug, strrpos($slug, ' ') + 1);
+        $slug = substr($slug, 0, strrpos($slug, ' '));
+    }
     $templates[] = "{$slug}.php";
- 
-    if ( '' === locate_template($templates) ) return;
+
+    if ( '' === locate_template($templates) ) {
+        return;
+    }
 
     if ( is_array( $wp_query->query_vars ) ) {
         extract( $wp_query->query_vars, EXTR_SKIP );
@@ -60,13 +75,23 @@ function render_template_part( $slug, $name = null, $args = array(), $echo = tru
         setup_postdata( $post );
     }
 
-    if ( false === $echo ) {
-        ob_start();
-        require( locate_template($templates) );
-        $return = ob_get_clean();
+    ob_start();
+    require( locate_template($templates) );
+    $html = ob_get_clean();
+
+    if ( isset($cssSelector) ) {
+        $crawler = new Crawler();
+        $crawler->addContent($html);
+        try {
+            $html = $crawler->filter($cssSelector)->html();
+        }
+        catch (Exception $e) {
+            $html = '';
+        }
     }
-    else {
-        require( locate_template($templates) );
+
+    if ( true === $echo ) {
+        echo $html;
     }
 
     if ( isset($query) ) {
@@ -78,7 +103,7 @@ function render_template_part( $slug, $name = null, $args = array(), $echo = tru
     }
 
     if ( false === $echo ) {
-        return $return;
+        return $html;
     }
 
 }

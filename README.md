@@ -7,7 +7,7 @@ An alternative to the native WordPress function `get_template_part()` that can p
 - Using composer : `composer require freshflesh/wp-render-template-part`
 - Or manually download and include the `src/wp-render-template-part.php` file
 
-##Parameters
+## Parameters
 
 * **$slug**: (string) (Required) The slug name for the generic template.
 * **$name**:  (string) (Optional) The name of the specialised template. Default value: null
@@ -62,6 +62,12 @@ Passing a WP_Query instance as a `query` argument will automatically set it as t
 Passing a WP_Post instance as a `post_object` argument will automatically call `setup_post_data()` so you can start using `the_title()`, `the_content()`.
 
 > Note: `query` and `post_object` are therefore reserved argument names
+
+
+#### CSS selectors
+You can add a CSS selector to the `slug` or `name` arguments to only load the HTML of the corresponding DOM node :
+`render_template_part( 'partials/sidebar', 'article #container' );`
+
 
 #### Extendable
 
